@@ -1,0 +1,21 @@
+{
+    {
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "space",
+	"type": "object",
+	"properties": {
+	    "name": {
+		"type": "string",
+		"description": "The name of the space."
+	    },
+	    "layers": {
+		"type": "array",
+		"description": "An array of layers within the space.",
+		"items": {
+		    "$ref": "layer_schema.json"
+		}
+	    },
+	    "required": ["name", "layers"]
+	}
+    }
+}
