@@ -5,6 +5,9 @@ defmodule HorizonSdk.HookBehavior do
   """
 
   @callback plugin_attachable?() :: :ok
+  @callback on_plugin_attach() :: :ok
+
+  @callback on_load() :: :ok
 
   @callback on_create_place() :: :ok
   @callback on_click_place() :: :ok
