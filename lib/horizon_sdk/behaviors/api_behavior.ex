@@ -38,4 +38,6 @@ defmodule HorizonSdk.ApiBehavior do
   @callback disable_step_time_forward() :: :ok
   @callback enable_step_time_forward() :: :ok
   @callback step_time_forward() :: :ok
+
+  @callback set_tooltip(String.t()) :: :ok
 end
