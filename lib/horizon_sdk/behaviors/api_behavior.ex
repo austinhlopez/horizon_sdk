@@ -6,18 +6,7 @@ defmodule HorizonSdk.ApiBehavior do
   edit a workspace or space programmatically.
   """
 
-  @callback register_package(params :: map) :: :ok | :error
-  @callback attach_package(package_id :: integer, workspace_id :: integer) :: :ok | :error
-
-  @callback attach_plugin(plugin_id :: integer, space_id :: integer) :: :ok | :error
-  @callback detach_plugin(space_id :: integer) :: :ok | :error
-
-  @callback plugin_attachable?(plugin_id :: integer, space_id :: integer, schema :: map) ::
-              boolean
-  @callback plugin_attached?(space_id :: integer) :: boolean
-
-  @callback list_plugins(space_id :: [integer]) :: [integer]
-
+  # space updates
   @callback get_space() :: :ok
 
   @callback create_place() :: :ok
