@@ -1,0 +1,107 @@
+name: 'CI'
+
+on: push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  INTEGRATION: true
+  MIX_ENV: test
+  otp: 25.0.1
+  elixir: 1.14.3
+  cache_key: 20220813
+
+jobs:
+  changes:
+    timeout-minutes: 5
+    runs-on: ubuntu-22.04
+    outputs:
+      horizon_sdk: ${{ steps.filter.outputs.horizon_sdk }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            horizon_sdk:
+              - .github/workflows/ci.yml
+              - '**'
+
+  test_horizon_sdk:
+    timeout-minutes: 15
+    needs: changes
+    if: ${{ needs.changes.outputs.horizon_sdk == 'true' }}
+
+    defaults:
+      run:
+        working-directory: .
+
+    runs-on: ubuntu-22.04
+
+    services:
+      db:
+        image: postgis/postgis
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSGRES_DB: horizon_sdk_test
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        id: beam
+        with:
+          otp-version: ${{ env.otp }}
+          elixir-version: ${{ env.elixir }}
+      - uses: actions/setup-node@v2
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: horizon_sdk-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            horizon_sdk-${{ runner.os }}--node-
+
+      - name: Cache Elixir deps and build
+        uses: actions/cache@v3
+        with:
+          path: |
+            _build
+            deps
+          key: horizon_sdk-${{ env.cache_key }}-${{ runner.os }}-mix-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            horizon_sdk-${{ env.cache_key }}-${{ runner.os }}-mix-${{ steps.beam.outputs.otp-version }}-${{ steps.beam.outputs.elixir-version }}-
+            horizon_sdk-${{ env.cache_key }}-${{ runner.os }}-mix-${{ steps.beam.outputs.otp-version }}-
+            horizon_sdk-${{ env.cache_key }}-${{ runner.os }}-mix-
+
+      - name: Install box deps
+        run: |
+          sudo apt-get install libsodium-dev
+
+      - name: Install mix deps
+        shell: bash
+        env:
+          GIT_SSH: ${{ secrets.GIT_SSH }}
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+        run: |      
+          mix deps.get
+          npm ci --prefix assets
+
+      - name: Compile Horizon_Sdk Dev Environment
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+        run: MIX_ENV=dev mix compile --all-warnings --warnings-as-errors
+
+      - name: Test Horizon_Sdk
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
+        run: |
+          mix format --check-formatted
+          mix credo
+          npm run prettier:check --prefix assets
+          mix phx.digest
+          mix test
