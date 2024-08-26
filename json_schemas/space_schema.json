@@ -1,4 +1,3 @@
-{
     {
 	"$schema": "http://json-schema.org/draft-07/schema#",
 	"title": "space",
@@ -14,8 +13,7 @@
 		"items": {
 		    "$ref": "layer_schema.json"
 		}
-	    },
-	    "required": ["name", "layers"]
-	}
+	    }
+	},
+	"required": ["name", "layers"]
     }
-}
