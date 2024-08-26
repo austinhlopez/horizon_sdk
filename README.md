@@ -1,6 +1,10 @@
 # HorizonSdk
 
-**TODO: Add description**
+Horizon SDK: use this library within a Horizon (or Yrbia) plugin to interface
+with the core system.
+
+Horizon SDK holds schema definitions, api documentation, and behaviors
+defining valid actions for use within hooks.
 
 ## Installation
 
