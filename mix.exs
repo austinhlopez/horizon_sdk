@@ -21,6 +21,7 @@ defmodule HorizonSdk.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:ex_json_schema, "~> 0.10.2"},
       {:jason, "~> 1.4"}
       # {:dep_from_hexpm, "~> 0.3.0"},
