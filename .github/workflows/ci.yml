@@ -58,13 +58,6 @@ jobs:
           otp-version: ${{ env.otp }}
           elixir-version: ${{ env.elixir }}
       - uses: actions/setup-node@v2
-      - name: Cache npm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: horizon_sdk-${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            horizon_sdk-${{ runner.os }}--node-
 
       - name: Cache Elixir deps and build
         uses: actions/cache@v3
@@ -89,7 +82,6 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS_JSON: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_JSON }}
         run: |      
           mix deps.get
-          npm ci --prefix assets
 
       - name: Compile Horizon_Sdk Dev Environment
         env:
@@ -102,6 +94,5 @@ jobs:
         run: |
           mix format --check-formatted
           mix credo
-          npm run prettier:check --prefix assets
           mix phx.digest
           mix test
