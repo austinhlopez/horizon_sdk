@@ -1,6 +1,6 @@
 defmodule HorizonSdk do
   @moduledoc """
-  Documentation for `HorizonSdk`.
+  Horizon Sdk
   """
 
   @doc """
