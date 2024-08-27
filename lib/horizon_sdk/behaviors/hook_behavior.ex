@@ -22,15 +22,15 @@ defmodule HorizonSdk.HookBehavior do
     quote do
       @behaviour HorizonSdk.HookBehavior
 
-      def on_click_place, do: default_on_click_place()
-      def on_create_place, do: default_on_create_place()
-      def on_delete_place, do: default_on_delete_place()
-      def on_hover_place, do: default_on_hover_place()
-      def on_load, do: default_on_load()
-      def on_plugin_attach, do: default_on_plugin_attach()
-      def on_step_time_forward, do: default_on_step_time_forward()
-      def on_update_place_data, do: default_on_update_place_data()
-      def plugin_attachable?, do: default_plugin_attachable?()
+      def on_click_place, do: :ok
+      def on_create_place, do: :ok
+      def on_delete_place, do: :ok
+      def on_hover_place, do: :ok
+      def on_load, do: :ok
+      def on_plugin_attach, do: :ok
+      def on_step_time_forward, do: :ok
+      def on_update_place_data, do: :ok
+      def plugin_attachable?, do: :ok
 
       defoverridable on_click_place: 0,
                      on_create_place: 0,
@@ -43,23 +43,4 @@ defmodule HorizonSdk.HookBehavior do
                      plugin_attachable?: 0
     end
   end
-
-  @doc false
-  def default_on_click_place, do: :ok
-  @doc false
-  def default_on_create_place, do: :ok
-  @doc false
-  def default_on_delete_place, do: :ok
-  @doc false
-  def default_on_hover_place, do: :ok
-  @doc false
-  def default_on_load, do: :ok
-  @doc false
-  def default_on_plugin_attach, do: :ok
-  @doc false
-  def default_on_step_time_forward, do: :ok
-  @doc false
-  def default_on_update_place_data, do: :ok
-  @doc false
-  def default_plugin_attachable?, do: :ok
 end
