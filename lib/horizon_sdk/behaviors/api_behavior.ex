@@ -7,19 +7,19 @@ defmodule HorizonSdk.ApiBehavior do
   """
 
   # space updates
-  @callback get_space() :: :ok
+  @callback get_space() :: any()
 
-  @callback create_place() :: :ok
-  @callback update_place() :: :ok
-  @callback delete_place() :: :ok
-  @callback get_place() :: :ok
-  @callback get_places() :: :ok
+  @callback create_place() :: any()
+  @callback update_place() :: any()
+  @callback delete_place() :: any()
+  @callback get_place() :: any()
+  @callback get_places() :: any()
 
-  @callback create_layer() :: :ok
-  @callback update_layer() :: :ok
-  @callback delete_layer() :: :ok
-  @callback get_layer() :: :ok
-  @callback get_layers() :: :ok
+  @callback create_layer() :: any()
+  @callback update_layer() :: any()
+  @callback delete_layer() :: any()
+  @callback get_layer() :: any()
+  @callback get_layers() :: any()
 
   @callback set_layer_symbol() :: :ok
   @callback set_layer_3d() :: :ok
@@ -40,4 +40,44 @@ defmodule HorizonSdk.ApiBehavior do
   @callback step_time_forward() :: :ok
 
   @callback set_tooltip(String.t()) :: :ok
+
+  defmacro __using__(_) do
+    quote do
+      @behaviour HorizonSdk.ApiBehavior
+
+      def get_space, :ok
+
+      def create_place, :ok
+      def update_place, :ok
+      def delete_place, :ok
+      def get_place, :ok
+      def get_places, :ok
+
+      def create_layer, :ok
+      def update_layer, :ok
+      def delete_layer, :ok
+      def get_layer, :ok
+      def get_layers, :ok
+
+      def set_layer_symbol, :ok
+      def set_layer_3d, :ok
+
+      def update_place_data, :ok
+      def update_layer_data, :ok
+      def update_space_data, :ok
+
+      def set_color, :ok
+      def set_size, :ok
+
+      def get_variation, :ok
+      def create_variation, :ok
+      def set_variation, :ok
+
+      def disable_step_time_forward, :ok
+      def enable_step_time_forward, :ok
+      def step_time_forward, :ok
+
+      def set_tooltip(_), :ok
+    end
+  end
 end
