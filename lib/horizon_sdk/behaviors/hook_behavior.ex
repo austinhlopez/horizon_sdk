@@ -4,42 +4,42 @@ defmodule HorizonSdk.HookBehavior do
   occur in a Horizon space.
   """
 
-  @callback plugin_attachable?() :: any()
-  @callback on_plugin_attach() :: any()
+  @callback plugin_attachable?() :: boolean()
+  @callback on_plugin_attach(state :: map()) :: map()
 
-  @callback on_load() :: any()
+  @callback on_load(state :: map()) :: map()
 
-  @callback on_create_place() :: any()
-  @callback on_click_place() :: any()
-  @callback on_hover_place() :: any()
-  @callback on_delete_place() :: any()
+  @callback on_create_place(place_id :: integer(), state :: map()) :: map()
+  @callback on_click_place(place_id :: integer(), state :: map()) :: map()
+  @callback on_hover_place(place_id :: integer(), state :: map()) :: map()
+  @callback on_delete_place(place_id :: integer(), state :: map()) :: map()
 
-  @callback on_update_place_data() :: any()
+  @callback on_update_place_data(place_id :: integer(), payload :: map(), state :: map()) :: map()
 
-  @callback on_step_time_forward() :: any()
+  @callback on_step_time_forward(timestamp :: integer(), state :: map()) :: map()
 
   defmacro __using__(_) do
     quote do
       @behaviour HorizonSdk.HookBehavior
 
-      def on_click_place, do: :ok
-      def on_create_place, do: :ok
-      def on_delete_place, do: :ok
-      def on_hover_place, do: :ok
-      def on_load, do: :ok
-      def on_plugin_attach, do: :ok
-      def on_step_time_forward, do: :ok
-      def on_update_place_data, do: :ok
-      def plugin_attachable?, do: :ok
+      def on_click_place(place_id, state), do: state
+      def on_create_place(place_id, state), do: state
+      def on_delete_place(place_id, state), do: state
+      def on_hover_place(place_id, state), do: state
+      def on_load(state), do: state
+      def on_plugin_attach(state), do: state
+      def on_step_time_forward(timestamp, state), do: state
+      def on_update_place_data(place_id, payload, state), do: state
+      def plugin_attachable?, do: true
 
-      defoverridable on_click_place: 0,
-                     on_create_place: 0,
-                     on_delete_place: 0,
-                     on_hover_place: 0,
-                     on_load: 0,
-                     on_plugin_attach: 0,
-                     on_step_time_forward: 0,
-                     on_update_place_data: 0,
+      defoverridable on_click_place: 2,
+                     on_create_place: 2,
+                     on_delete_place: 2,
+                     on_hover_place: 2,
+                     on_load: 1,
+                     on_plugin_attach: 1,
+                     on_step_time_forward: 1,
+                     on_update_place_data: 3,
                      plugin_attachable?: 0
     end
   end
