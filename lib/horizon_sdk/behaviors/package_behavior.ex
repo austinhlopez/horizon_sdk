@@ -37,8 +37,8 @@ defmodule HorizonSdk.PackageBehavior do
       def plugin_attached?(space_id), do: false
       def get_plugin_id_attached(space_id), do: nil
 
-      def initialize_mapping(), do: %{}
-      def initialize_state(), do: %{}
+      def initialize_mapping, do: %{}
+      def initialize_state, do: %{}
       def set_mapping(space_id, plugin_id), do: :ok
 
       def on_plugin_attach(plugin_id, space_id), do: :ok
