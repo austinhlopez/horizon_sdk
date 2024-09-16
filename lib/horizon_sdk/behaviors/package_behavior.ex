@@ -1,7 +1,10 @@
 defmodule HorizonSdk.PackageBehavior do
   @moduledoc """
   Horizon's package callbacks are used to
-  register packages and attaach plugins.
+  register packages and attach plugins.
+
+  They are operations called during registration and attachment,
+  rather than as responses to space-related events.
   """
 
   @callback attach_package(
