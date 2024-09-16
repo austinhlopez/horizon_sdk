@@ -13,10 +13,13 @@ defmodule HorizonSdk.PackageBehavior do
 
   @callback plugin_attachable?(plugin_id :: integer, space_id :: integer, schema :: map) ::
               boolean
-  @callback plugin_attached?(plugin_id :: :integer, space_id :: integer) :: boolean
   @callback plugin_attached?(space_id :: integer) :: boolean
   @callback get_plugin_id_attached(space_id :: integer) :: integer | nil
 
-  @callback attach_plugin(plugin_id :: integer, space_id :: integer) :: :ok | :error
-  @callback detach_plugin(space_id :: integer) :: :ok | :error
+  @callback initialize_mapping() :: map()
+  @callback initialize_state() :: map()
+  @callback set_mapping(space_id :: integer(), plugin_id :: integer()) :: :ok
+
+  @callback on_plugin_attach(plugin_id :: integer, space_id :: integer) :: :ok
+  @callback on_plugin_detach(space_id :: integer) :: :ok | :error
 end
