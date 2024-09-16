@@ -7,19 +7,19 @@ defmodule HorizonSdk.ApiBehavior do
   """
 
   # space updates
-  @callback get_space(id :: integer(), adapter :: map()) :: {:ok, result :: map()}
+  @callback get_space(adapter :: map(), id :: integer()) :: {:ok, result :: map()}
 
-  @callback create_place(payload :: map(), adapter :: map()) :: :ok
-  @callback update_place(id :: integer(), payload :: map(), adapter :: map()) :: :ok
-  @callback delete_place(id :: integer(), adapter :: map()) :: :ok
-  @callback get_place(id :: integer(), adapter :: map()) :: {:ok, result :: map()}
-  @callback get_places(ids :: list(integer()), adapter :: map()) :: :ok
+  @callback create_place(adapter :: map(), payload :: map()) :: :ok
+  @callback update_place(adapter :: map(), id :: integer(), payload :: map()) :: :ok
+  @callback delete_place(adapter :: map(), id :: integer()) :: :ok
+  @callback get_place(adapter :: map(), id :: integer()) :: {:ok, result :: map()}
+  @callback get_places(adapter :: map(), ids :: list(integer())) :: :ok
 
-  @callback create_layer(payload :: map(), adapter :: map()) :: :ok
-  @callback update_layer(id :: integer(), payload :: map(), adapter :: map()) :: :ok
-  @callback delete_layer(id :: integer()) :: :ok
-  @callback get_layer(id :: integer()) :: {:ok, result :: map()}
-  @callback get_layers(ids :: list(integer())) :: {:ok, result :: map()}
+  @callback create_layer(adapter :: map(), payload :: map()) :: :ok
+  @callback update_layer(adapter :: map(), id :: integer(), payload :: map()) :: :ok
+  @callback delete_layer(adapter :: map(), id :: integer()) :: :ok
+  @callback get_layer(adapter :: map(), id :: integer()) :: {:ok, result :: map()}
+  @callback get_layers(adapter :: map(), ids :: list(integer())) :: {:ok, result :: map()}
 
   @callback set_layer_symbol(layer_id :: integer(), payload :: map(), adapter :: map()) :: :ok
   @callback set_layer_3d(layer_id :: integer(), payload :: map(), adapter :: map()) :: :ok
