@@ -23,10 +23,11 @@ defmodule HorizonSdk.PackageBehavior do
   @callback get_plugin_id_attached(space_id :: integer) :: integer | nil
 
   @callback initialize_space_mapping(space :: map()) :: map()
-  @callback initialize_simulation_mapping() :: map()
+  @callback initialize_simulation_mapping(space :: map(), simulation :: map()) :: map()
   @callback initialize_state() :: map()
-  @callback set_space_mapping(space_id :: integer(), plugin_id :: integer()) :: :ok
-  @callback set_simulation_mapping() :: :ok
+
+  @callback set_space_mapping(space_map :: map()) :: map()
+  @callback set_simulation_mapping(simulation_map :: map()) :: map()
 
   @callback on_plugin_attach(plugin_id :: integer, space_id :: integer) :: :ok
   @callback on_plugin_detach(space_id :: integer) :: :ok | :error
@@ -48,10 +49,10 @@ defmodule HorizonSdk.PackageBehavior do
       def get_plugin_id_attached(space_id), do: nil
 
       def initialize_space_mapping(space), do: %{}
-      def initialize_simulation_mapping, do: %{}
+      def initialize_simulation_mapping(space, simulation), do: %{}
       def initialize_state, do: %{}
-      def set_space_mapping(space_id, plugin_id), do: :ok
-      def set_simulation_mapping(), do: :ok
+      def set_space_mapping(space_map), do: :ok
+      def set_simulation_mapping(simulation_map), do: :ok
 
       def on_plugin_attach(plugin_id, space_id), do: :ok
       def on_plugin_detach(space_id), do: :ok
@@ -67,10 +68,10 @@ defmodule HorizonSdk.PackageBehavior do
                      plugin_attached?: 1,
                      get_plugin_id_attached: 1,
                      initialize_space_mapping: 1,
-                     initialize_simulation_mapping: 0,
+                     initialize_simulation_mapping: 2,
                      initialize_state: 0,
-                     set_space_mapping: 2,
-                     set_simulation_mapping: 0,
+                     set_space_mapping: 1,
+                     set_simulation_mapping: 1,
                      on_plugin_attach: 2,
                      on_plugin_detach: 1,
                      get_schema_pretty: 0,
