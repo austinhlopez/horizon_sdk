@@ -22,7 +22,7 @@ defmodule HorizonSdk.PackageBehavior do
   @callback plugin_attached?(space_id :: integer) :: boolean
   @callback get_plugin_id_attached(space_id :: integer) :: integer | nil
 
-  @callback initialize_space_mapping() :: map()
+  @callback initialize_space_mapping(space :: map()) :: map()
   @callback initialize_simulation_mapping() :: map()
   @callback initialize_state() :: map()
   @callback set_space_mapping(space_id :: integer(), plugin_id :: integer()) :: :ok
@@ -47,7 +47,7 @@ defmodule HorizonSdk.PackageBehavior do
       def plugin_attached?(space_id), do: false
       def get_plugin_id_attached(space_id), do: nil
 
-      def initialize_space_mapping, do: %{}
+      def initialize_space_mapping(space), do: %{}
       def initialize_simulation_mapping, do: %{}
       def initialize_state, do: %{}
       def set_space_mapping(space_id, plugin_id), do: :ok
@@ -66,7 +66,7 @@ defmodule HorizonSdk.PackageBehavior do
                      plugin_attachable?: 3,
                      plugin_attached?: 1,
                      get_plugin_id_attached: 1,
-                     initialize_space_mapping: 0,
+                     initialize_space_mapping: 1,
                      initialize_simulation_mapping: 0,
                      initialize_state: 0,
                      set_space_mapping: 2,
