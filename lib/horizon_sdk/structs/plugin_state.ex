@@ -5,6 +5,7 @@ defmodule HorizonSdk.PluginState do
     :plugin_module,
     :space_id,
     :simulation_id,
+    :space_id,
     :plugin_id,
     adapter: %{},
     data: %{},
