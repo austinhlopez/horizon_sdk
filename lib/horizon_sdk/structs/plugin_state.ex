@@ -4,12 +4,11 @@ defmodule HorizonSdk.PluginState do
   defstruct [
     :plugin_module,
     :space_id,
-    :simulation_id,
-    :space_id,
     :plugin_id,
     adapter: %{},
     data: %{},
-    mapping: %{}
+    mapping: %{},
+    simulation_id: nil
   ]
 
   @type t :: %__MODULE__{
