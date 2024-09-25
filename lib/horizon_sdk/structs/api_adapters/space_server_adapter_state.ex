@@ -1,4 +1,4 @@
-defmodule HorizonSdk.InternalAdapter do
+defmodule HorizonSdk.APIAdapters.SpaceServerAdapterState do
   @moduledoc """
   """
 

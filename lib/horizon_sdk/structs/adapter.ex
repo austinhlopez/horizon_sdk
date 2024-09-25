@@ -1,5 +1,5 @@
-defmodule HorizonSdk.Adapter do
-  alias HorizonSdk.{HttpAdapter, InternalAdapter}
+defmodule HorizonSdk.AdapterState do
+  alias HorizonSdk.{HttpAdapter, InternalAdapter, PersistsAdapter, MemoryAdapter}
 
-  @type t :: HttpAdapter | InternalAdapter
+  @type t :: HttpAdapterState | InternalAdapterState | PersistAdapterState | MemoryAdapterState
 end

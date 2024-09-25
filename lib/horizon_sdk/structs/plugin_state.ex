@@ -1,7 +1,8 @@
 defmodule HorizonSdk.PluginState do
-  alias HorizonSdk.Adapter
+  alias HorizonSdk.APIAdapterState
 
   defstruct [
+    :adapter_module,
     :plugin_module,
     :space_id,
     :plugin_id,
@@ -12,8 +13,9 @@ defmodule HorizonSdk.PluginState do
   ]
 
   @type t :: %__MODULE__{
+          adapter_module: atom(),
           plugin_module: atom(),
-          adapter: Adapter.t(),
+          adapter: APIAdapterState.t(),
           space_id: integer(),
           simulation_id: integer() | nil,
           plugin_id: integer(),
