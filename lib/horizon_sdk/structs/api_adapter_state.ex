@@ -1,6 +1,10 @@
 defmodule HorizonSdk.APIAdapterState do
-  alias HorizonSdk.APIAdapters.{HttpAdapterState, SpaceServerAdapterState,
-				PersistAdapterState, MemoryAdapterState}
+  alias HorizonSdk.APIAdapters.{
+    HttpAdapterState,
+    MemoryAdapterState,
+    PersistAdapterState,
+    SpaceServerAdapterState
+  }
 
-  @type t :: HttpAdapterState | SpaceServerAdapterState | PersistAdapterState | MemoryAdapterState
+  @type t :: HttpAdapterState | MemoryAdapterState | PersistAdapterState | SpaceServerAdapterState
 end
