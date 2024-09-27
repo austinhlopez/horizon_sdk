@@ -130,6 +130,10 @@ defmodule HorizonSdk.ApiBehavior do
             ) :: {:ok, map(), APIAdapterState.t()}
 
   # map visual
+  # TODO: fill out API
+
+  # Question about simulations vs. spaces
+  # for almost ALL API functions
   @callback set_color(adapter :: APIAdapterState.t()) :: :ok
   @callback set_size(adapter :: APIAdapterState.t()) :: :ok
 
@@ -150,6 +154,7 @@ defmodule HorizonSdk.ApiBehavior do
               user_id :: integer(),
               adapter :: APIAdapterState.t()
             ) :: {:ok, APIAdapterState.t()}
+
   @callback set_variation(
               variation_id :: integer(),
               user_id :: integer(),
@@ -194,7 +199,7 @@ defmodule HorizonSdk.ApiBehavior do
 
       def update_space!(space_id, params, user_id, adapter), do: {:ok, params, adapter}
 
-      def create_place(payload, adapter), do: {:ok, %{}, adapter}
+      def create_place(payload, user_id, adapter), do: {:ok, %{}, adapter}
 
       def create_place_from_feature!(feature_params, current_user, adapter),
         do: {:ok, %{}, adapter}
@@ -202,7 +207,7 @@ defmodule HorizonSdk.ApiBehavior do
       def update_place!(id, payload, user, adapter), do: {:ok, payload, adapter}
       def update_place(id, payload, user, adapter), do: {:ok, payload, adapter}
 
-      def update_place_from_feature!(selected_place, feature_params, current_user),
+      def update_place_from_feature!(selected_place, feature_params, current_user, adapter),
         do: {:ok, feature_params, adapter}
 
       def delete_place!(place, user, adapter), do: {:ok, adapter}
@@ -264,6 +269,7 @@ defmodule HorizonSdk.ApiBehavior do
                      delete_layer: 3,
                      get_layer: 3,
                      get_layers: 3,
+                     get_with_layer_places: 3,
                      set_layer_symbol: 4,
                      set_layer_3d: 4,
                      update_place_data: 4,
