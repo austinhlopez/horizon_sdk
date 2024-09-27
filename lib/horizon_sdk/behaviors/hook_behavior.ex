@@ -60,9 +60,9 @@ defmodule HorizonSdk.HookBehavior do
       def on_hover_place(place_id, user_id, state), do: state
       def on_delete_place(place_id, user_id, state), do: state
 
-      def on_update_place_data(place_id, user_id, state), do: state
-
       def on_simulation_start(simulation_id, user_id, state), do: state
+
+      def on_update_place_data(place_id, user_id, state), do: state
 
       def on_step_time_forward(timestamp, state), do: state
 
@@ -75,7 +75,7 @@ defmodule HorizonSdk.HookBehavior do
                      on_hover_place: 3,
                      on_delete_place: 3,
                      on_simulation_start: 3,
-                     on_update_place_data: 2,
+                     on_update_place_data: 3,
                      on_step_time_forward: 2
     end
   end
