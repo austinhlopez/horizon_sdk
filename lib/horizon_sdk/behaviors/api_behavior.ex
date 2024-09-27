@@ -107,6 +107,13 @@ defmodule HorizonSdk.ApiBehavior do
               adapter :: APIAdapterState.t()
             ) :: {:ok, APIAdapterState.t()}
 
+  # layer places
+  @callback get_layer_places_by_layer_id(
+              layer_id :: integer(),
+              user_id :: integer(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, list(map()), APIAdapterState.t()}
+
   # data
   @callback update_place_data(
               place_id :: integer(),
@@ -229,6 +236,9 @@ defmodule HorizonSdk.ApiBehavior do
       def set_layer_symbol(layer_id, user_id, payload, adapter), do: {:ok, adapter}
       def set_layer_3d(layer_id, user_id, payload, adapter), do: {:ok, adapter}
 
+      # layer places
+      def get_layer_places_by_layer_id(layer_id, user_id, adapter), do: {:ok, [], adapter}
+
       def update_place_data(place_id, user_id, payload, adapter), do: {:ok, %{}, adapter}
       def update_layer_data(layer_id, user_id, payload, adapter), do: {:ok, %{}, adapter}
       def update_space_data(space_id, user_id, payload, adapter), do: {:ok, %{}, adapter}
@@ -275,6 +285,7 @@ defmodule HorizonSdk.ApiBehavior do
                      get_with_layer_places: 3,
                      set_layer_symbol: 4,
                      set_layer_3d: 4,
+                     get_layer_places_by_layer_id: 3,
                      update_place_data: 4,
                      update_layer_data: 4,
                      update_space_data: 4,
