@@ -76,7 +76,7 @@ defmodule HorizonSdk.ApiBehavior do
               payload :: map(),
               adapter :: APIAdapterState.t()
             ) :: {:ok, map(), APIAdapterState.t()}
-  @callback delete_layer(id :: integer(), adapter :: APIAdapterState.t()) ::
+  @callback delete_layer(id :: integer(), user_id :: integer(), adapter :: APIAdapterState.t()) ::
               {:ok, APIAdapterState.t()}
 
   @callback get_layer(id :: integer(), user_id :: integer(), adapter :: APIAdapterState.t()) ::
@@ -173,13 +173,13 @@ defmodule HorizonSdk.ApiBehavior do
               user_id :: integer(),
               payload :: map(),
               adapter :: APIAdapterState.t()
-            ) :: :ok
+            ) :: {:ok, map(), APIAdapterState.t()}
   @callback update_block_property(
               id :: integer(),
               user_id :: integer(),
               payload :: map(),
               adapter :: APIAdapterState.t()
-            ) :: :ok
+            ) :: {:ok, map(), APIAdapterState.t()}
 
   # tooltip
   @callback set_tooltip(String.t(), adapter :: APIAdapterState.t()) :: :ok
@@ -247,11 +247,14 @@ defmodule HorizonSdk.ApiBehavior do
       def step_time_forward(adapter), do: {:ok, adapter}
 
       # blocks
-      def update_block_content(id, user_id, payload, adapter), do: :ok
-      def update_block_property(id, user_id, payload, adapter), do: :ok
+      def update_block_content(id, user_id, payload, adapter), do: {:ok, %{}, adapter}
+      def update_block_property(id, user_id, payload, adapter), do: {:ok, %{}, adapter}
 
       # tooltips
       def set_tooltip(_, adapter), do: :ok
+
+      # space plugin
+      def get_space_plugin_by_space_id_plugin_id(_, _, adapter), do: {:ok, %{}, adapter}
 
       defoverridable get_space: 3,
                      update_space!: 4,
@@ -286,7 +289,8 @@ defmodule HorizonSdk.ApiBehavior do
                      step_time_forward: 1,
                      update_block_content: 4,
                      update_block_property: 4,
-                     set_tooltip: 2
+                     set_tooltip: 2,
+                     get_space_plugin_by_space_id_plugin_id: 3
     end
   end
 end
