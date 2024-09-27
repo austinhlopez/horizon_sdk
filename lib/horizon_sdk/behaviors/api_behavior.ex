@@ -237,8 +237,8 @@ defmodule HorizonSdk.ApiBehavior do
       def set_size(adapter), do: :ok
       def update_circle_radius(layer_id, value, adapter), do: {:ok, adapter}
 
-      def get_variation(variation_id, user_id, adapter), do: {:ok, map(), adapter}
-      def create_variation(payload, user_id, adapter), do: {:ok, map(), adapter}
+      def get_variation(variation_id, user_id, adapter), do: {:ok, %{}, adapter}
+      def create_variation(payload, user_id, adapter), do: {:ok, %{}, adapter}
       def set_variation(variation_id, user_id, adapter), do: {:ok, adapter}
 
       # time
