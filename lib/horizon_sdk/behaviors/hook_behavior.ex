@@ -51,16 +51,16 @@ defmodule HorizonSdk.HookBehavior do
       def plugin_attachable?, do: false
       def on_plugin_attach(state), do: state
 
-      def on_load(state), do: state
+      def on_load(user_id, state), do: state
 
-      def on_create_place(place_id, state), do: state
-      def on_create_layer_place(layer_id, place_id, layer_place_id, state), do: state
+      def on_create_place(place_id, user_id, state), do: state
+      def on_create_layer_place(layer_id, place_id, user_id, layer_place_id, state), do: state
 
-      def on_click_place(place_id, state), do: state
-      def on_hover_place(place_id, state), do: state
-      def on_delete_place(place_id, state), do: state
+      def on_click_place(place_id, user_id, state), do: state
+      def on_hover_place(place_id, user_id, state), do: state
+      def on_delete_place(place_id, user_id, state), do: state
 
-      def on_update_place_data(place_id, state), do: state
+      def on_update_place_data(place_id, user_id, state), do: state
 
       def on_simulation_start(simulation_id, user_id, state), do: state
 
@@ -68,12 +68,12 @@ defmodule HorizonSdk.HookBehavior do
 
       defoverridable plugin_attachable?: 0,
                      on_plugin_attach: 1,
-                     on_load: 1,
-                     on_create_place: 2,
-                     on_create_layer_place: 4,
-                     on_click_place: 2,
-                     on_hover_place: 2,
-                     on_delete_place: 2,
+                     on_load: 2,
+                     on_create_place: 3,
+                     on_create_layer_place: 5,
+                     on_click_place: 3,
+                     on_hover_place: 3,
+                     on_delete_place: 3,
                      on_simulation_start: 3,
                      on_update_place_data: 2,
                      on_step_time_forward: 2
