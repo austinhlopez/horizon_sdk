@@ -176,17 +176,30 @@ defmodule HorizonSdk.ApiBehavior do
 
   # blocks
   @callback update_block_content(
-              id :: integer(),
+              id :: String.t(),
               user_id :: integer(),
               payload :: map(),
               adapter :: APIAdapterState.t()
             ) :: {:ok, map(), APIAdapterState.t()}
   @callback update_block_property(
-              id :: integer(),
+              id :: String.t(),
               user_id :: integer(),
               payload :: map(),
               adapter :: APIAdapterState.t()
             ) :: {:ok, map(), APIAdapterState.t()}
+
+  @callback set_block_text(
+              id :: String.t(),
+              user_id :: integer(),
+              text :: String.t(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, APIAdapterState.t()}
+
+  @callback get_block_text(
+              id :: String.t(),
+              user_id :: integer(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, String.t(), APIAdapterState.t()}
 
   # tooltip
   @callback set_tooltip(String.t(), adapter :: APIAdapterState.t()) :: :ok
@@ -260,6 +273,9 @@ defmodule HorizonSdk.ApiBehavior do
       def update_block_content(id, user_id, payload, adapter), do: {:ok, %{}, adapter}
       def update_block_property(id, user_id, payload, adapter), do: {:ok, %{}, adapter}
 
+      def set_block_text(id, user_id, text, adapter), do: {:ok, "", adapter}
+      def get_block_text(id, user_id, adapter), do: {:ok, "", adapter}
+
       # tooltips
       def set_tooltip(_, adapter), do: :ok
 
@@ -300,6 +316,8 @@ defmodule HorizonSdk.ApiBehavior do
                      step_time_forward: 1,
                      update_block_content: 4,
                      update_block_property: 4,
+                     set_block_text: 4,
+                     get_block_text: 3,
                      set_tooltip: 2,
                      get_space_plugin_by_space_id_plugin_id: 3
     end

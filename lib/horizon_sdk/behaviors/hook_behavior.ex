@@ -6,11 +6,14 @@ defmodule HorizonSdk.HookBehavior do
 
   alias HorizonSdk.Structs.PluginState
 
+  # plugins
   @callback plugin_attachable?() :: boolean()
   @callback on_plugin_attach(state :: PluginState.t()) :: PluginState.t()
 
+  # space_live
   @callback on_load(user_id :: integer(), state :: PluginState.t()) :: PluginState.t()
 
+  # space create
   @callback on_create_place(place_id :: integer(), user_id :: integer(), state :: PluginState.t()) ::
               PluginState.t()
   @callback on_create_layer_place(
@@ -34,6 +37,7 @@ defmodule HorizonSdk.HookBehavior do
             ) ::
               PluginState.t()
 
+  # simulation
   @callback on_simulation_start(
               simulation_id :: integer(),
               user_id :: integer(),
