@@ -291,8 +291,14 @@ defmodule HorizonSdk.ApiBehavior do
       def update_place!(id, payload, user, scope, adapter), do: {:ok, payload, adapter}
       def update_place(id, payload, user, scope, adapter), do: {:ok, payload, adapter}
 
-      def update_place_from_feature!(selected_place, feature_params, current_user, scope, adapter),
-        do: {:ok, feature_params, adapter}
+      def update_place_from_feature!(
+            selected_place,
+            feature_params,
+            current_user,
+            scope,
+            adapter
+          ),
+          do: {:ok, feature_params, adapter}
 
       def delete_place!(place, user, scope, adapter), do: {:ok, adapter}
       def delete_place(id, user, scope, adapter), do: {:ok, adapter}
