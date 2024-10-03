@@ -347,9 +347,6 @@ defmodule HorizonSdk.ApiBehavior do
       def set_block_text(id, user_id, text, scope, adapter), do: {:ok, "", adapter}
       def get_block_text(id, user_id, scope, adapter), do: {:ok, "", adapter}
 
-      def set_block_text(id, user_id, text, adapter), do: {:ok, "", adapter}
-      def get_block_text(id, user_id, adapter), do: {:ok, "", adapter}
-
       # tooltips
       def set_tooltip(_, scope, adapter), do: :ok
 
