@@ -196,8 +196,9 @@ defmodule HorizonSdk.ApiBehavior do
 
   # Question about simulations vs. spaces
   # for almost ALL API functions
-  @callback set_color(adapter :: APIAdapterState.t()) :: :ok
-  @callback set_size(adapter :: APIAdapterState.t()) :: :ok
+  @callback set_color(scope :: map(), adapter :: APIAdapterState.t()) ::
+              {:ok, APIAdapterState.t()}
+  @callback set_size(scope :: map(), adapter :: APIAdapterState.t()) :: {:ok, APIAdapterState.t()}
 
   @callback update_circle_radius(
               layer_id :: integer,
@@ -326,8 +327,8 @@ defmodule HorizonSdk.ApiBehavior do
       def update_layer_data(layer_id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
       def update_space_data(space_id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
 
-      def set_color(scope, adapter), do: :ok
-      def set_size(scope, adapter), do: :ok
+      def set_color(scope, adapter), do: {:ok, adapter}
+      def set_size(scope, adapter), do: {:ok, adapter}
       def update_circle_radius(layer_id, value, scope, adapter), do: {:ok, adapter}
 
       def get_variation(variation_id, user_id, scope, adapter), do: {:ok, %{}, adapter}
