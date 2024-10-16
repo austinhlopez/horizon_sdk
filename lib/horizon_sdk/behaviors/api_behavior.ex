@@ -315,7 +315,7 @@ defmodule HorizonSdk.ApiBehavior do
   # tick can be launched by
   # a package or plugin to itself
   @callback tick(space_plugin_id :: integer(), adapter :: APIAdapterState.t()) ::
-        {:ok, adapter :: APIAdapterState.t()}
+              {:ok, adapter :: APIAdapterState.t()}
 
   defmacro __using__(_) do
     quote do
