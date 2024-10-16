@@ -276,6 +276,47 @@ defmodule HorizonSdk.ApiBehavior do
               adapter :: APIAdapterState.t()
             ) :: {:ok, result :: map(), APIAdapterState.t()}
 
+  # services
+  @callback llm_complete_turbo_4_json(
+              context :: String.t(),
+              text :: String.t(),
+              response_format :: map(),
+              max_tokens :: integer(),
+              user_id :: integer(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, result :: String.t() | map(), adapter :: APIAdapterState.t()}
+
+  # --- collections + feeds #
+
+  # collections
+  @callback get_rss_feeds(collection_id :: integer(), adapter :: APIAdapterState.t()) ::
+              {:ok, result :: list(map()), adapter :: APIAdapterState.t()}
+
+  @callback get_x_feeds(collection_id :: integer(), adapter :: APIAdapterState.t()) ::
+              {:ok, result :: list(map()), adapter :: APIAdapterState.t()}
+
+  @callback get_recent_posts(
+              collection_id :: integer(),
+              user_id :: integer(),
+              opts :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, result :: list(map()), adapter :: APIAdapterState.t()}
+
+  # rss feeds
+  @callback get_posts(rss_feed_id :: integer(), adapter :: APIAdapterState.t()) ::
+              {:ok, result :: list(map()), adapter :: APIAdapterState.t()}
+
+  # x feeds
+  @callback get_x_posts(x_feed_id :: integer(), adapter :: APIAdapterState.t()) ::
+              {:ok, result :: list(map()), adapter :: APIAdapterState.t()}
+
+  # control
+
+  # tick can be launched by
+  # a package or plugin to itself
+  @callback tick(space_plugin_id :: integer(), adapter :: APIAdapterState.t()) ::
+        {:ok, adapter :: APIAdapterState.t()}
+
   defmacro __using__(_) do
     quote do
       @behaviour HorizonSdk.ApiBehavior
@@ -353,6 +394,20 @@ defmodule HorizonSdk.ApiBehavior do
       # space plugin
       def get_space_plugin_by_space_id_plugin_id(_, _, scope, adapter), do: {:ok, %{}, adapter}
 
+      # services
+      def llm_complete_turbo_4_json(context, text, response_format, max_tokens, user_id, adapter),
+        do: {:ok, "", adapter}
+
+      # collections
+      def get_rss_feeds(collection_id, adapter), do: {:ok, [], adapter}
+
+      def get_x_feeds(collection_id, adapter), do: {:ok, [], adapter}
+
+      def get_recent_posts(collection_id, user_id, opts, adapter), do: {:ok, [], adapter}
+
+      # control
+      def tick(space_plugin_id, adapter), do: adapter
+
       defoverridable get_space: 4,
                      update_space!: 5,
                      create_place: 4,
@@ -390,7 +445,12 @@ defmodule HorizonSdk.ApiBehavior do
                      set_block_text: 5,
                      get_block_text: 4,
                      set_tooltip: 3,
-                     get_space_plugin_by_space_id_plugin_id: 4
+                     get_space_plugin_by_space_id_plugin_id: 4,
+                     llm_complete_turbo_4_json: 6,
+                     get_rss_feeds: 2,
+                     get_x_feeds: 2,
+                     get_recent_posts: 4,
+                     tick: 2
     end
   end
 end

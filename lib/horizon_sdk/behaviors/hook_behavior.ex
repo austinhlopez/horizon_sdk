@@ -9,6 +9,7 @@ defmodule HorizonSdk.HookBehavior do
   # plugins
   @callback plugin_attachable?() :: boolean()
   @callback on_plugin_attach(state :: PluginState.t()) :: PluginState.t()
+  @callback on_init(user_id :: integer(), state :: PluginState.t()) :: state :: PluginState.t()
 
   # space_live
   @callback on_load(user_id :: integer(), state :: PluginState.t()) :: PluginState.t()
@@ -47,6 +48,9 @@ defmodule HorizonSdk.HookBehavior do
   @callback on_step_time_forward(timestamp :: integer(), state :: PluginState.t()) ::
               PluginState.t()
 
+  # 'tick' is a manually sent step
+  @callback on_tick(state :: PluginState.t()) :: PluginState.t()
+
   defmacro __using__(_) do
     quote do
       @behaviour HorizonSdk.HookBehavior
@@ -54,6 +58,7 @@ defmodule HorizonSdk.HookBehavior do
       # some of these might now be package behaviors
       def plugin_attachable?, do: false
       def on_plugin_attach(state), do: state
+      def on_init(user_id, state), do: state
 
       def on_load(user_id, state), do: state
 
@@ -70,6 +75,8 @@ defmodule HorizonSdk.HookBehavior do
 
       def on_step_time_forward(timestamp, state), do: state
 
+      def on_tick(state), do: state
+
       defoverridable plugin_attachable?: 0,
                      on_plugin_attach: 1,
                      on_load: 2,
@@ -80,7 +87,8 @@ defmodule HorizonSdk.HookBehavior do
                      on_delete_place: 3,
                      on_simulation_start: 3,
                      on_update_place_data: 3,
-                     on_step_time_forward: 2
+                     on_step_time_forward: 2,
+                     on_tick: 1
     end
   end
 end
