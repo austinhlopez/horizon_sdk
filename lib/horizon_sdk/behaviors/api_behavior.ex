@@ -406,7 +406,7 @@ defmodule HorizonSdk.ApiBehavior do
       def get_recent_posts(collection_id, user_id, opts, adapter), do: {:ok, [], adapter}
 
       def get_posts(rss_feed_id, adapter), do: {:ok, [], adapter}
-      def get_x_postss(x_feed_id, adapter), do: {:ok, [], adapter}
+      def get_x_posts(x_feed_id, adapter), do: {:ok, [], adapter}
 
       # control
       def tick(space_plugin_id, adapter), do: adapter
