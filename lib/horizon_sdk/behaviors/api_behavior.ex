@@ -33,13 +33,20 @@ defmodule HorizonSdk.ApiBehavior do
             ) :: {:ok, map(), APIAdapterState.t()}
 
   # place
+  @callback create_place!(
+              payload :: map(),
+              user_id :: integer(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, map(), APIAdapterState.t()}
+
   @callback create_place(
               payload :: map(),
               user_id :: integer(),
               scope :: map(),
               adapter :: APIAdapterState.t()
-            ) ::
-              {:ok, map(), APIAdapterState.t()}
+            ) :: {:ok, map(), APIAdapterState.t()}
+
   @callback create_place_from_feature!(
               feature_params :: map(),
               user :: map(),
@@ -325,6 +332,8 @@ defmodule HorizonSdk.ApiBehavior do
 
       def update_space!(space_id, params, user_id, scope, adapter), do: {:ok, params, adapter}
 
+      def create_place!(payload, user_id, scope, adapter), do: {:ok, %{}, adapter}
+
       def create_place(payload, user_id, scope, adapter), do: {:ok, %{}, adapter}
 
       def create_place_from_feature!(feature_params, current_user, scope, adapter),
@@ -413,6 +422,7 @@ defmodule HorizonSdk.ApiBehavior do
 
       defoverridable get_space: 4,
                      update_space!: 5,
+                     create_place!: 4,
                      create_place: 4,
                      create_place_from_feature!: 4,
                      update_place!: 5,
