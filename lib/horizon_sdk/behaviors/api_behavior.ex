@@ -313,6 +313,7 @@ defmodule HorizonSdk.ApiBehavior do
   @callback get_block!(
               id :: String.t(),
               user_id :: integer(),
+              opts :: map(),
               scope :: map(),
               adapter :: APIAdapterState.t()
             ) :: {:ok, String.t(), APIAdapterState.t()}
