@@ -435,7 +435,7 @@ defmodule HorizonSdk.ApiBehavior do
       # mapbox and session
       def load_mapbox_places(places, scope, adapter), do: {:ok, %{}, adapter}
 
-      def scroll_to_block(block_id, user_id, scope, adapter), {:ok, adapter}
+      def scroll_to_block(block_id, user_id, scope, adapter), do: {:ok, adapter}
 
       def set_color(scope, adapter), do: {:ok, adapter}
       def set_size(scope, adapter), do: {:ok, adapter}
