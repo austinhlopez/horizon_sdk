@@ -12,7 +12,8 @@ defmodule HorizonSdk.HookBehavior do
   @callback on_init(user_id :: integer(), state :: PluginState.t()) :: state :: PluginState.t()
 
   # space_live
-  @callback on_load(user_id :: integer(), state :: PluginState.t()) :: PluginState.t()
+  @callback on_load(session_id :: binary(), user_id :: integer(), state :: PluginState.t()) ::
+              PluginState.t()
 
   # space create
   @callback on_create_place(place_id :: integer(), user_id :: integer(), state :: PluginState.t()) ::
@@ -60,7 +61,7 @@ defmodule HorizonSdk.HookBehavior do
       def on_plugin_attach(state), do: state
       def on_init(user_id, state), do: state
 
-      def on_load(user_id, state), do: state
+      def on_load(session_id, user_id, state), do: state
 
       def on_create_place(place_id, user_id, state), do: state
       def on_create_layer_place(layer_id, place_id, user_id, layer_place_id, state), do: state
@@ -79,7 +80,7 @@ defmodule HorizonSdk.HookBehavior do
 
       defoverridable plugin_attachable?: 0,
                      on_plugin_attach: 1,
-                     on_load: 2,
+                     on_load: 3,
                      on_create_place: 3,
                      on_create_layer_place: 5,
                      on_click_place: 3,

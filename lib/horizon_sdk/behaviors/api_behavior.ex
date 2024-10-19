@@ -105,6 +105,14 @@ defmodule HorizonSdk.ApiBehavior do
               adapter :: APIAdapterState.t()
             ) :: {:ok, list(map()), APIAdapterState.t()}
 
+  @callback get_recent_places_with_layer_ids(
+              layer_ids :: list(integer()),
+              user_id :: integer(),
+              opts :: map(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, list(map()), APIAdapterState.t()}
+
   # layer
   @callback create_layer(
               payload :: map(),
@@ -198,6 +206,20 @@ defmodule HorizonSdk.ApiBehavior do
               adapter :: APIAdapterState.t()
             ) :: {:ok, map(), APIAdapterState.t()}
 
+  # map session
+  @callback load_mapbox_places(
+              places :: list(map()),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, APIAdapterState.t()}
+
+  @callback scroll_to_block(
+              blcok_id :: integer(),
+              user_id :: integer(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, APIAdapterState.t()}
+
   # map visual
   # TODO: fill out API
 
@@ -257,6 +279,21 @@ defmodule HorizonSdk.ApiBehavior do
               adapter :: APIAdapterState.t()
             ) :: {:ok, map(), APIAdapterState.t()}
 
+  @callback create_block!(
+              payload :: map(),
+              user_id :: integer(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, APIAdapterState.t()}
+
+  @callback copy_paste_block!(
+              block_id :: String.t(),
+              to_parent_id :: String.t(),
+              user_id :: integer(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, APIAdapterState.t()}
+
   @callback set_block_text(
               id :: String.t(),
               user_id :: integer(),
@@ -271,6 +308,20 @@ defmodule HorizonSdk.ApiBehavior do
               scope :: map(),
               adapter :: APIAdapterState.t()
             ) :: {:ok, String.t(), APIAdapterState.t()}
+
+  @callback get_block!(
+              id :: String.t(),
+              user_id :: integer(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, String.t(), APIAdapterState.t()}
+
+  @callback delete_block!(
+              block_id :: String.t(),
+              user_id :: integer(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, APIAdapterState.t()}
 
   # tooltip
   @callback set_tooltip(text :: String.t(), scope :: map(), adapter :: APIAdapterState.t()) :: :ok
@@ -357,6 +408,9 @@ defmodule HorizonSdk.ApiBehavior do
       def get_place(id, user_id, scope, adapter), do: {:ok, %{}, adapter}
       def get_places(ids, user_id, scope, adapter), do: {:ok, [], adapter}
 
+      def get_recent_places_with_layer_ids(layer_ids, user_id, opts, scope, adapter),
+        do: {:ok, [], adapter}
+
       # layer
       def create_layer(payload, user_id, scope, adapter), do: {:ok, %{}, adapter}
       def update_layer(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
@@ -377,9 +431,14 @@ defmodule HorizonSdk.ApiBehavior do
       def update_layer_data(layer_id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
       def update_space_data(space_id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
 
+      # mapbox and session
+      def load_mapbox_places(places, scope, adapter), do: {:ok, %{}, adapter}
+
       def set_color(scope, adapter), do: {:ok, adapter}
       def set_size(scope, adapter), do: {:ok, adapter}
       def update_circle_radius(layer_id, value, scope, adapter), do: {:ok, adapter}
+
+      # variations
 
       def get_variation(variation_id, user_id, scope, adapter), do: {:ok, %{}, adapter}
       def create_variation(payload, user_id, scope, adapter), do: {:ok, %{}, adapter}
@@ -391,11 +450,20 @@ defmodule HorizonSdk.ApiBehavior do
       def step_time_forward(scope, adapter), do: {:ok, adapter}
 
       # blocks
+      def create_block!(payload, user_id, scope, adapter), do: {:ok, %{}, adapter}
+
+      def copy_paste_block!(block_id, to_parent_id, user_id, scope, adapter),
+        do: {:ok, %{}, adapter}
+
       def update_block_content(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
       def update_block_property(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
 
+      def delete_block!(id, user_id, scope, adapter), do: {:ok, adapter}
+
       def set_block_text(id, user_id, text, scope, adapter), do: {:ok, "", adapter}
       def get_block_text(id, user_id, scope, adapter), do: {:ok, "", adapter}
+
+      def get_block!(block_id, user_id, opts, scope, adapter), do: {:ok, %{}, adapter}
 
       # tooltips
       def set_tooltip(_, scope, adapter), do: :ok
@@ -432,6 +500,7 @@ defmodule HorizonSdk.ApiBehavior do
                      delete_place: 4,
                      get_place: 4,
                      get_places: 4,
+                     get_recent_places_with_layer_ids: 5,
                      create_layer: 4,
                      update_layer: 5,
                      delete_layer: 4,
@@ -444,6 +513,7 @@ defmodule HorizonSdk.ApiBehavior do
                      update_place_data: 5,
                      update_layer_data: 5,
                      update_space_data: 5,
+                     load_mapbox_places: 3,
                      set_color: 2,
                      set_size: 2,
                      update_circle_radius: 4,
@@ -453,10 +523,14 @@ defmodule HorizonSdk.ApiBehavior do
                      disable_step_time_forward: 2,
                      enable_step_time_forward: 2,
                      step_time_forward: 2,
+                     create_block!: 4,
+                     copy_paste_block!: 5,
                      update_block_content: 5,
                      update_block_property: 5,
+                     delete_block!: 4,
                      set_block_text: 5,
                      get_block_text: 4,
+                     get_block!: 5,
                      set_tooltip: 3,
                      get_space_plugin_by_space_id_plugin_id: 4,
                      llm_complete_turbo_4_json: 6,
