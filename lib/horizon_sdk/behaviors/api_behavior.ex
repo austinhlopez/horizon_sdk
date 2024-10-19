@@ -214,7 +214,7 @@ defmodule HorizonSdk.ApiBehavior do
             ) :: {:ok, APIAdapterState.t()}
 
   @callback scroll_to_block(
-              blcok_id :: integer(),
+              block_id :: String.t(),
               user_id :: integer(),
               scope :: map(),
               adapter :: APIAdapterState.t()
@@ -271,13 +271,6 @@ defmodule HorizonSdk.ApiBehavior do
               scope :: map(),
               adapter :: APIAdapterState.t()
             ) :: {:ok, map(), APIAdapterState.t()}
-  @callback update_block_property(
-              id :: String.t(),
-              user_id :: integer(),
-              payload :: map(),
-              scope :: map(),
-              adapter :: APIAdapterState.t()
-            ) :: {:ok, map(), APIAdapterState.t()}
 
   @callback create_block!(
               payload :: map(),
@@ -293,6 +286,14 @@ defmodule HorizonSdk.ApiBehavior do
               scope :: map(),
               adapter :: APIAdapterState.t()
             ) :: {:ok, APIAdapterState.t()}
+
+  @callback set_block_properties(
+              block_id :: String.t(),
+              user_id :: integer(),
+              payload :: map(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, map(), APIAdapterState.t()}
 
   @callback set_block_text(
               id :: String.t(),
@@ -434,6 +435,8 @@ defmodule HorizonSdk.ApiBehavior do
       # mapbox and session
       def load_mapbox_places(places, scope, adapter), do: {:ok, %{}, adapter}
 
+      def scroll_to_block(block_id, user_id, scope, adapter), {:ok, adapter}
+
       def set_color(scope, adapter), do: {:ok, adapter}
       def set_size(scope, adapter), do: {:ok, adapter}
       def update_circle_radius(layer_id, value, scope, adapter), do: {:ok, adapter}
@@ -456,7 +459,7 @@ defmodule HorizonSdk.ApiBehavior do
         do: {:ok, %{}, adapter}
 
       def update_block_content(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
-      def update_block_property(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
+      def set_block_properties(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
 
       def delete_block!(id, user_id, scope, adapter), do: {:ok, adapter}
 
@@ -514,6 +517,7 @@ defmodule HorizonSdk.ApiBehavior do
                      update_layer_data: 5,
                      update_space_data: 5,
                      load_mapbox_places: 3,
+                     scroll_to_block: 4,
                      set_color: 2,
                      set_size: 2,
                      update_circle_radius: 4,
@@ -526,7 +530,7 @@ defmodule HorizonSdk.ApiBehavior do
                      create_block!: 4,
                      copy_paste_block!: 5,
                      update_block_content: 5,
-                     update_block_property: 5,
+                     set_block_properties: 5,
                      delete_block!: 4,
                      set_block_text: 5,
                      get_block_text: 4,
