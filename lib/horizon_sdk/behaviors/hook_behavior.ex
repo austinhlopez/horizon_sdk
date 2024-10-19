@@ -25,8 +25,12 @@ defmodule HorizonSdk.HookBehavior do
               layer_place_id :: integer(),
               state :: PluginState.t()
             ) :: PluginState.t()
-  @callback on_click_place(place_id :: integer(), user_id :: integer(), state :: PluginState.t()) ::
-              PluginState.t()
+  @callback on_place_click(
+              place_id :: integer(),
+              session_id :: binary(),
+              user_id :: integer(),
+              state :: PluginState.t()
+            ) :: PluginState.t()
   @callback on_hover_place(place_id :: integer(), user_id :: integer(), state :: PluginState.t()) ::
               PluginState.t()
   @callback on_delete_place(place_id :: integer(), user_id :: integer(), state :: PluginState.t()) ::
