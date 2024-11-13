@@ -272,6 +272,14 @@ defmodule HorizonSdk.ApiBehavior do
               adapter :: APIAdapterState.t()
             ) :: {:ok, map(), APIAdapterState.t()}
 
+  @callback update_block!(
+              id :: String.t(),
+              user_id :: integer(),
+              payload :: map(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, map(), APIAdapterState.t()}
+
   @callback create_block!(
               payload :: map(),
               user_id :: integer(),
@@ -456,6 +464,8 @@ defmodule HorizonSdk.ApiBehavior do
       # blocks
       def create_block!(payload, user_id, scope, adapter), do: {:ok, %{}, adapter}
 
+      def update_block!(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
+
       def copy_paste_block!(block_id, to_parent_id, user_id, scope, adapter),
         do: {:ok, %{}, adapter}
 
@@ -529,6 +539,7 @@ defmodule HorizonSdk.ApiBehavior do
                      enable_step_time_forward: 2,
                      step_time_forward: 2,
                      create_block!: 4,
+                     update_block!: 5,
                      copy_paste_block!: 5,
                      update_block_content: 5,
                      set_block_properties: 5,
