@@ -93,11 +93,6 @@ defmodule HorizonSdk.HookBehavior do
 
       def on_tick(state), do: state
 
-      def on_hourly_cron(state), do: state
-      def on_monthly_cron(state), do: state
-      def on_daily_cron(state), do: state
-      def on_minutely_cron(state), do: state
-
       defoverridable plugin_attachable?: 0,
                      on_plugin_attach: 1,
                      on_load: 3,
