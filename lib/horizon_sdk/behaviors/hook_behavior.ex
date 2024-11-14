@@ -80,10 +80,10 @@ defmodule HorizonSdk.HookBehavior do
       def on_hover_place(place_id, user_id, state), do: state
       def on_delete_place(place_id, user_id, state), do: state
 
-      def on_hourly_cron, do: state
-      def on_monthly_cron, do: state
-      def on_daily_cron, do: state
-      def on_minutely_cron, do: state
+      def on_hourly_cron(state), do: state
+      def on_monthly_cron(state), do: state
+      def on_daily_cron(state), do: state
+      def on_minutely_cron(state), do: state
 
       def on_simulation_start(simulation_id, user_id, state), do: state
 
