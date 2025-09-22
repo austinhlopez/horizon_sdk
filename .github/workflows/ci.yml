@@ -10,7 +10,7 @@ env:
   INTEGRATION: true
   MIX_ENV: test
   otp: 25.0.1
-  elixir: 1.14.3
+  elixir: 1.18.4
   cache_key: 20220813
 
 jobs:

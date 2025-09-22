@@ -5,7 +5,7 @@ defmodule HorizonSdk.MixProject do
     [
       app: :horizon_sdk,
       version: "0.1.2",
-      elixir: "~> 1.14",
+      elixir: "~> 1.18.4",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]

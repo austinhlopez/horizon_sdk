@@ -181,6 +181,13 @@ defmodule HorizonSdk.ApiBehavior do
               adapter :: APIAdapterState.t()
             ) :: {:ok, list(map()), APIAdapterState.t()}
 
+  @callback update_layer_place!(
+              layer_place :: map(),
+              params :: map(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, map(), APIAdapterState.t()}
+
   # data
   @callback update_place_data(
               place_id :: integer(),
@@ -385,6 +392,8 @@ defmodule HorizonSdk.ApiBehavior do
   @callback tick(space_plugin_id :: integer(), adapter :: APIAdapterState.t()) ::
               {:ok, adapter :: APIAdapterState.t()}
 
+  @callback refresh_portals!(user_id, :: integer(), space_id :: integer(), scope :: map(), adapter :: APIAdapterState.t()) :: {:ok, adapter :: APIAdapterState.t()}
+
   defmacro __using__(_) do
     quote do
       @behaviour HorizonSdk.ApiBehavior
@@ -436,6 +445,7 @@ defmodule HorizonSdk.ApiBehavior do
 
       # layer places
       def get_layer_places_by_layer_id(layer_id, user_id, scope, adapter), do: {:ok, [], adapter}
+      def update_layer_place!(layer_place, params, scope, adapter), do: {:ok, params, adapter}
 
       def update_place_data(place_id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
       def update_layer_data(layer_id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
@@ -502,6 +512,8 @@ defmodule HorizonSdk.ApiBehavior do
       # control
       def tick(space_plugin_id, adapter), do: adapter
 
+      def refresh_portals!(user_id, space_id, scope, adapter), do: adapter
+
       defoverridable get_space: 4,
                      update_space!: 5,
                      create_place!: 4,
@@ -524,6 +536,7 @@ defmodule HorizonSdk.ApiBehavior do
                      set_layer_symbol: 5,
                      set_layer_3d: 5,
                      get_layer_places_by_layer_id: 4,
+                     update_layer_place!: 4,
                      update_place_data: 5,
                      update_layer_data: 5,
                      update_space_data: 5,
@@ -555,7 +568,8 @@ defmodule HorizonSdk.ApiBehavior do
                      get_recent_posts: 4,
                      get_posts: 2,
                      get_x_posts: 2,
-                     tick: 2
+                     tick: 2,
+                     refresh_portals!: 4
     end
   end
 end
