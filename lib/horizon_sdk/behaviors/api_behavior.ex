@@ -392,7 +392,12 @@ defmodule HorizonSdk.ApiBehavior do
   @callback tick(space_plugin_id :: integer(), adapter :: APIAdapterState.t()) ::
               {:ok, adapter :: APIAdapterState.t()}
 
-  @callback refresh_portals!(user_id, :: integer(), space_id :: integer(), scope :: map(), adapter :: APIAdapterState.t()) :: {:ok, adapter :: APIAdapterState.t()}
+  @callback refresh_portals!(
+              user_id :: integer(),
+              space_id :: integer(),
+              scope :: map(),
+              adapter :: APIAdapterState.t()
+            ) :: {:ok, adapter :: APIAdapterState.t()}
 
   defmacro __using__(_) do
     quote do
