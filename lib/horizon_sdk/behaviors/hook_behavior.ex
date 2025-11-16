@@ -76,7 +76,7 @@ defmodule HorizonSdk.HookBehavior do
       def on_create_place(place_id, user_id, state), do: state
       def on_create_layer_place(layer_id, place_id, user_id, layer_place_id, state), do: state
 
-      def on_click_place(place_id, user_id, state), do: state
+      def on_place_click(place_id, session_id, user_id, state), do: state
       def on_hover_place(place_id, user_id, state), do: state
       def on_delete_place(place_id, user_id, state), do: state
 
@@ -95,10 +95,11 @@ defmodule HorizonSdk.HookBehavior do
 
       defoverridable plugin_attachable?: 0,
                      on_plugin_attach: 1,
+                     on_init: 2,
                      on_load: 3,
                      on_create_place: 3,
                      on_create_layer_place: 5,
-                     on_click_place: 3,
+                     on_place_click: 4,
                      on_hover_place: 3,
                      on_delete_place: 3,
                      on_simulation_start: 3,
