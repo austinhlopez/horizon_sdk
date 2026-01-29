@@ -82,14 +82,14 @@ defmodule HorizonSdk.ApiBehavior do
               scope :: map(),
               adapter :: APIAdapterState.t()
             ) ::
-              {:ok, APIAdapterState.t()}
+              {:ok, map(), APIAdapterState.t()}
   @callback delete_place(
               id :: integer(),
               user :: map(),
               scope :: map(),
               adapter :: APIAdapterState.t()
             ) ::
-              {:ok, APIAdapterState.t()}
+              {:ok, map(), APIAdapterState.t()}
 
   @callback get_place(
               id :: integer(),
@@ -134,7 +134,7 @@ defmodule HorizonSdk.ApiBehavior do
               scope :: map(),
               adapter :: APIAdapterState.t()
             ) ::
-              {:ok, APIAdapterState.t()}
+              {:ok, map(), APIAdapterState.t()}
 
   @callback get_layer(
               id :: integer(),
@@ -338,7 +338,7 @@ defmodule HorizonSdk.ApiBehavior do
               user_id :: integer(),
               scope :: map(),
               adapter :: APIAdapterState.t()
-            ) :: {:ok, APIAdapterState.t()}
+            ) :: {:ok, map(), APIAdapterState.t()}
 
   # tooltip
   @callback set_tooltip(text :: String.t(), scope :: map(), adapter :: APIAdapterState.t()) :: :ok
@@ -426,8 +426,8 @@ defmodule HorizonSdk.ApiBehavior do
           ),
           do: {:ok, feature_params, adapter}
 
-      def delete_place!(place, user, scope, adapter), do: {:ok, adapter}
-      def delete_place(id, user, scope, adapter), do: {:ok, adapter}
+      def delete_place!(place, user, scope, adapter), do: {:ok, %{}, adapter}
+      def delete_place(id, user, scope, adapter), do: {:ok, %{}, adapter}
 
       def get_place(id, user_id, scope, adapter), do: {:ok, %{}, adapter}
       def get_places(ids, user_id, scope, adapter), do: {:ok, [], adapter}
@@ -438,7 +438,7 @@ defmodule HorizonSdk.ApiBehavior do
       # layer
       def create_layer(payload, user_id, scope, adapter), do: {:ok, %{}, adapter}
       def update_layer(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
-      def delete_layer(id, user_id, scope, adapter), do: {:ok, adapter}
+      def delete_layer(id, user_id, scope, adapter), do: {:ok, %{}, adapter}
 
       def get_layer(id, user_id, scope, adapter), do: {:ok, %{}, adapter}
       def get_layers(ids, user_id, scope, adapter), do: {:ok, [], adapter}
@@ -487,7 +487,7 @@ defmodule HorizonSdk.ApiBehavior do
       def update_block_content(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
       def set_block_properties(id, user_id, payload, scope, adapter), do: {:ok, %{}, adapter}
 
-      def delete_block!(id, user_id, scope, adapter), do: {:ok, adapter}
+      def delete_block!(id, user_id, scope, adapter), do: {:ok, %{}, adapter}
 
       def set_block_text(id, user_id, text, scope, adapter), do: {:ok, "", adapter}
       def get_block_text(id, user_id, scope, adapter), do: {:ok, "", adapter}
